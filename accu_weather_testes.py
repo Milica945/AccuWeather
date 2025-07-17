@@ -63,5 +63,51 @@ def test_menu_button_opens_sidebar_and_option_works():
     print('Menu button opens sidebar and selected option works correctly.')
 
 
+def test_video_page_opening():
+
+    driver=open_site('https://www.accuweather.com/')
+    print('Site is open.')
+    sleep(2)
+    element=driver.find_element(By.XPATH,"/html/body/div/div[6]/div[1]/div[2]/a[5]")
+    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});",element)
+    sleep(3)
+    driver.find_element(By.XPATH,"/html/body/div/div[6]/div[1]/div[2]/a[5]").click()
+    sleep(2)
+    assert driver.find_element(By.XPATH,"/html/body/div/div[4]/div[2]/div[1]/div[3]/a[1]/h1").text=='TRENDING NOW', 'Fail'
+    print('The Video button correctly navigates to the video section, displaying relevant clips.')
+    close_browser(driver)
+
+def test_newsletters_link_navigation():
+    driver=open_site('https://www.accuweather.com/')
+    second_tab=driver.current_window_handle
+    print('Site is open.')
+    sleep(2)
+    driver.find_element(By.XPATH,"//*[@id='afb-nav-container']/div/ul/li[5]/a").click()
+    sleep(2)
+    tabs=driver.window_handles
+    for tab in tabs:
+        if tab !=second_tab:
+            driver.switch_to.window(tab)
+            break
+    assert driver.current_url=='https://afb.accuweather.com/accuweatherexecutivedailynewsletters', 'Fail'
+    print('The redirection to newsletters works.')
+    close_browser(driver)
+def test_data_suite_link_navigation():
+    driver=open_site('https://www.accuweather.com/')
+    second_tab=driver.current_window_handle
+    print('The site is open.')
+    sleep(2)
+    driver.find_element(By.XPATH,"//*[@id='afb-nav-container']/div/ul/li[4]/a").click()
+    sleep(2)
+    tabs=driver.window_handles
+    for tab in tabs:
+        if tab !=second_tab:
+            driver.switch_to.window(tab)
+            break
+    assert driver.current_url=='https://afb.accuweather.com/accuweather-data-suite-1','Fail'
+    print('The redirection to data suite works.')
+    close_browser(driver)
+
+
 def close_browser(driver):
     driver.close()
