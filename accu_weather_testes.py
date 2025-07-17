@@ -62,7 +62,6 @@ def test_menu_button_opens_sidebar_and_option_works():
     assert driver.find_element(By.XPATH,"//*[@id='cityRadar-container-legacy']/div[1]/div[1]/h2").text=='BELGRADE WEATHER RADAR','Fail'
     print('Menu button opens sidebar and selected option works correctly.')
 
-    close_browser(driver)
 
 def close_browser(driver):
     driver.close()
